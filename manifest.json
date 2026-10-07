@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "nurfaizfoat.clock",
+  "name": "Waktu Solat Clock",
+  "version": "1.0.0",
+  "author": "Nurfaizfoat (based on Omarchy Clock)",
+  "license": "MIT",
+  "description": "Omarchy clock calendar with JAKIM e-Solat prayer times",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Waktu Solat Clock",
+    "description": "Calendar and today's JAKIM prayer times (zone setting)",
+    "category": "Time",
+    "allowMultiple": false,
+    "defaults": { "zone": "WLY01" },
+    "schema": [
+      { "key": "zone", "type": "string", "label": "JAKIM zone code" }
+    ]
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.clock"
+  }
+}
