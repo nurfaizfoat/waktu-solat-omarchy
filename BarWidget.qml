@@ -4,6 +4,7 @@ import Quickshell.Io
 import qs.Commons
 import qs.Ui
 import "Model.js" as Model
+import "PrayerTimes.js" as PrayerTimes
 
 // Date/time label for the bar, and the host for the calendar popup.
 //
@@ -28,7 +29,15 @@ BarWidget {
   // What the bar shows is what shell.json stores, so a cycled format is the
   // format from then on rather than something that reverts on restart.
   readonly property string activeFormat: configuredFormat
-  readonly property string displayText: formatted(displayDate)
+
+  // Next fard prayer and the minutes until it, read off the panel so the bar
+  // and the popup never disagree. Shown horizontally only: a vertical bar
+  // has no room for a second line of words. `"countdown": "Off"` on the
+  // shell.json entry (or the bar widget settings) hides it.
+  readonly property bool showCountdown: String(setting("countdown", "On")).toLowerCase() !== "off"
+  readonly property var upcomingPrayer: panelLoader.item ? panelLoader.item.upcomingPrayer : null
+  readonly property string countdownText: showCountdown && !vertical ? PrayerTimes.barCountdown(upcomingPrayer) : ""
+  readonly property string displayText: formatted(displayDate) + (countdownText ? "  ·  " + countdownText : "")
   readonly property var verticalLines: displayText.split("\n")
 
   function refresh() {

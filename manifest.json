@@ -14,12 +14,30 @@
   },
   "barWidget": {
     "displayName": "Waktu Solat Clock",
-    "description": "Calendar and today's JAKIM prayer times (zone setting)",
+    "description": "Calendar, today's JAKIM prayer times and a next-prayer countdown in the bar (zone setting)",
     "category": "Time",
     "allowMultiple": false,
-    "defaults": { "zone": "WLY01" },
+    "defaults": {
+      "zone": "WLY01",
+      "countdown": "On"
+    },
     "schema": [
-      { "key": "zone", "type": "string", "label": "JAKIM zone code" }
+      {
+        "key": "zone",
+        "type": "string",
+        "label": "JAKIM zone code"
+      },
+      {
+        "key": "countdown",
+        "type": "enum",
+        "label": "Next prayer countdown in bar",
+        "options": [
+          "On",
+          "Off"
+        ],
+        "defaultValue": "On",
+        "description": "Show the next fard prayer and minutes until it beside the clock."
+      }
     ]
   },
   "omarchy": {

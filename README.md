@@ -18,6 +18,8 @@ omarchy plugin add https://github.com/nurfaizfoat/waktu-solat-omarchy.git --enab
 
 If it does not appear in the bar, use Omarchy's bar widget settings to add `nurfaizfoat.clock` in place of `omarchy.clock`. Do not keep both clocks in the bar. The `omarchy.clonedFrom` metadata tells Omarchy which built-in clock this replaces and preserves stock-clock shortcut routing.
 
+The bar label also shows the next fard prayer and the time until it, for example `Tuesday 05:35  ·  Subuh in 16 min` (hours and minutes beyond an hour, `Zohor in 7h 31m`). Prayer times are fetched when the shell starts and retried every five minutes until today's times are in hand, so the countdown works without opening the panel. To hide it, set `"countdown": "Off"` on the `nurfaizfoat.clock` entry in `~/.config/omarchy/shell.json` or use the bar widget settings. The countdown is shown on horizontal bars only.
+
 Click the clock to open the calendar and prayer times. Right-click cycles clock formats; middle-click opens timezone selection. To change the prayer zone, use the bar widget settings or set `"zone": "<JAKIM zone code>"` on the `nurfaizfoat.clock` entry in `~/.config/omarchy/shell.json` (for example, `"zone": "WLY01"`). The prayer zone is separate from the system timezone.
 
 ### JAKIM prayer zones

@@ -51,9 +51,22 @@ Panel {
   onContentForegroundChanged: sunCanvas.requestPaint()
   onNowChanged: sunCanvas.requestPaint()
 
+  // The bar label shows the next-prayer countdown, so times are fetched as
+  // soon as the widget mounts and kept fresh across zone and day changes,
+  // not only while the popup is open. A failed fetch (no network at login,
+  // say) is retried on a slow timer until today's times are in hand.
   onPrayerZoneChanged: {
     prayerData = null
-    if (opened) fetchPrayerTimes()
+    fetchPrayerTimes()
+  }
+
+  Component.onCompleted: fetchPrayerTimes()
+
+  Timer {
+    interval: 5 * 60 * 1000
+    repeat: true
+    running: !root.prayerLoading && (!root.prayerData || root.fetchedDate !== root.todayKey || root.fetchedZone !== root.prayerZone)
+    onTriggered: root.fetchPrayerTimes()
   }
 
   function fetchPrayerTimes() {
@@ -75,7 +88,7 @@ Panel {
   function receivePrayerResponse(text) {
     if (requestedDate !== todayKey || requestedZone !== prayerZone) {
       prayerLoading = false
-      if (opened) Qt.callLater(fetchPrayerTimes)
+      Qt.callLater(fetchPrayerTimes)
       return
     }
     try {
@@ -305,7 +318,7 @@ Panel {
       root.prayerData = null
       root.fetchedDate = ""
       if (followToday) root.goToToday()
-      if (root.opened) root.fetchPrayerTimes()
+      root.fetchPrayerTimes()
     }
   }
 

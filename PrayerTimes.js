@@ -83,6 +83,18 @@ function duration(total) {
   return Math.floor(total / 60) + " h " + (total % 60) + " min"
 }
 
+// Short form for the bar label: "42 min" within the hour, "7h 31m" beyond.
+function shortDuration(total) {
+  if (total < 60) return total + " min"
+  return Math.floor(total / 60) + "h " + (total % 60) + "m"
+}
+
+// "Zohor in 7h 31m" — the bar's at-a-glance line beside the clock.
+function barCountdown(next) {
+  if (!next) return ""
+  return next.name + " in " + shortDuration(next.remaining)
+}
+
 function rows(times, now) {
   if (!times) return []
   var currentMinutes = now.getHours() * 60 + now.getMinutes()
